@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es5",
+    "esModuleInterop": true,
+    "noImplicitAny": false,
+    "sourceMap": true,
+    "rootDir": "./server",
+    "outDir": "./dist",
+    // "watch": true,
+    "strict": true,
+    "moduleResolution": "node",
+    "lib": ["es6"]
+  },
+  "include": [
+    "./server/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

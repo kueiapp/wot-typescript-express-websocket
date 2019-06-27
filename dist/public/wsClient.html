@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<h1>Temperature: <font id="temp"></font></h1>
+<h1>Humidity: <font id="humid"></font></h1>
+<script>
+function startWs(url, msg) 
+{
+    var socket = new WebSocket(url);
+    // getting message from server
+    socket.onmessage = function (event) 
+    {        
+        try{
+            var obj = JSON.parse(event.data)
+            if(typeof(obj) === "object"){
+                console.log('obj: ',obj);
+                document.querySelector("#temp").innerText = obj.temperature;
+                document.querySelector("#humid").innerText = obj.humidity;
+            }
+        }
+        catch(err){
+            // string msg
+            console.log('response from server: ' + event.data);
+        }
+    };
+    socket.onerror = function (error) 
+    {
+        console.log('An error occurred while trying to connect to a Websocket!');
+        console.log(error);
+    };
+    socket.onopen = function (event) 
+    {
+        if (msg) {
+            console.log('send message to server')
+            socket.send(msg);
+        }
+        console.log("client Websocket connected")
+    };
+}
+
+startWs('ws://localhost:8080/api/sensors/dht', 'hi server');
+
+</script>
+</body>
+</html>
